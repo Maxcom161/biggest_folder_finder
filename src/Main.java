@@ -34,7 +34,7 @@ public class Main
         System.out.println(end2 + " ms " + " size - " + size);
 
         System.out.println(getHumanReadableSize(size));
-
+        System.out.println(getSizeFromHumanReadable("1Gb"));
     }
 
 
@@ -53,49 +53,74 @@ public class Main
 
     //TODO: 24B, 234Kb, 36Mb, 34Gb, 42Tb
     public static String getHumanReadableSize(long size){
-
-        long sizeB = size;
-        long sizeKb = 0;
-        long sizeMb = 0;
-        long sizeGb = 0;
-        long sizeTb = 0;
-        for (int i = 0; i < 5; i++) {
-            if (size > 0) {
-                size /= 1024;
-                if (size > 0) {
-                    sizeKb = size;
-                    size /= 1024;
-                    if (size > 0) {
-                        sizeMb = size;
-                        size /= 1024;
-                        if (size > 0) {
-                            sizeGb = size;
-                            size /= 1024;
-                            if (size > 0) {
-                                sizeTb = size;
-                                size /= 1024;
-                            }
-                        }
-                    }
-                }
-            } else {
+        int y = 0;
+        for (int i = 4; i >= 0; i--){
+            long pow = (long) Math.pow(1024, i);
+            if (size > 0 && size >= pow) {
+                y = i;
                 break;
             }
         }
-        return sizeB + "B" + "\n"
-                + sizeKb + "Kb" + "\n"
-                + sizeMb + "Mb" + "\n"
-                + sizeGb + "Gb" + "\n"
-                + sizeTb + "Tb" + "\n";
+        switch (y) {
+            case 0: return size + "B";
+            case 1: return size/((long) Math.pow(1024, y)) + "Kb";
+            case 2: return size/((long) Math.pow(1024, y)) + "Mb";
+            case 3: return size/((long) Math.pow(1024, y)) + "Gb";
+            case 4: return size/((long) Math.pow(1024, y)) + "Tb";
+        }
+
+
+//
+//        if (size > 0 && size < 1024) {
+//            return size + "B";
+//        } else {
+//            size /= 1024;
+//        }
+//        if (size > 0 && size < 1024) {
+//            return size + "Kb";
+//        } else {
+//            size /= 1024;
+//        }
+//        if (size > 0 && size < 1024) {
+//            return size + "Mb";
+//        } else {
+//            size /= 1024;
+//        }
+//        if (size > 0 && size < 1024) {
+//            return size + "Gb";
+//        } else {
+//            size /= 1024;
+//        }
+//        if (size > 0 && size < 1024) {
+//            return size + "Tb";
+//        }
+        return "";
     }
+
+
 
 
     //TODO: 24B, 234Kb, 36Mb, 34Gb, 42Tb
     // 24B, 234K, 36M, 34G, 42T
     // 235K => 240640 (1024 * 235)
 
-    public long getSizeFromHumanReadable(String size){
-
+    public static long getSizeFromHumanReadable(String size){
+        long result = Long.valueOf(size.replaceAll("[^0-9]", ""));
+        if (size.contains("B")){
+            return Long.valueOf(result);
+        }
+        if (size.contains("K")){
+            return Long.valueOf(result) * 1024;
+        }
+        if (size.contains("M")){
+            return (long) (Long.valueOf(result) * Math.pow(1024, 2));
+        }
+        if (size.contains("G")){
+            return (long) (Long.valueOf(result) * Math.pow(1024, 3));
+        }
+        if (size.contains("T")){
+            return (long) (Long.valueOf(result) * Math.pow(1024, 4));
+        }
         return 0;
     }
 }
