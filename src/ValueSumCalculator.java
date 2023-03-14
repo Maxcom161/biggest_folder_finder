@@ -5,14 +5,15 @@ import java.util.concurrent.RecursiveTask;
 
 public class ValueSumCalculator extends RecursiveTask<Long> {
 
-    private File folder;
+    private Node node;
 
-    public ValueSumCalculator(File folder) {
-        this.folder = folder;
+    public ValueSumCalculator(Node node) {
+        this.node = node;
     }
 
     @Override
     protected Long compute() {
+        File folder = node.getFolder();
         if (folder.isFile()) {
             return folder.length();
         }
@@ -20,15 +21,17 @@ public class ValueSumCalculator extends RecursiveTask<Long> {
         List<ValueSumCalculator> subTasks = new LinkedList<>();
         File[] files = folder.listFiles();
         for(File file : files) {
-            ValueSumCalculator task = new ValueSumCalculator(file);
+            Node child = new Node(file);
+            ValueSumCalculator task = new ValueSumCalculator(child);
             task.fork(); // запустим асинхронно
             subTasks.add(task);
+            node.addChild(child);
         }
 
         for(ValueSumCalculator task : subTasks) {
             sum += task.join(); // wait for the result ждем и суммируем результат
         }
-
+        node.setSize(sum);
         return sum;
     }
 }
