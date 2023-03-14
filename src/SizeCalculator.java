@@ -14,11 +14,11 @@ public class SizeCalculator {
             }
         }
         switch (y) {
-            case 0: return size + "B";
-            case 1: return Math.round(size/((long) Math.pow(1024, y))) + "Kb";
-            case 2: return Math.round(size/((long) Math.pow(1024, y))) + "Mb";
-            case 3: return Math.round(size/((long) Math.pow(1024, y))) + "Gb";
-            case 4: return Math.round(size/((long) Math.pow(1024, y))) + "Tb";
+            case 0: return Math.round(size * 100)/100. + "B";
+            case 1: return Math.round(size/(Math.pow(1024, y)) * 100)/100. + "Kb";
+            case 2: return Math.round(size/(Math.pow(1024, y)) * 100)/100. + "Mb";
+            case 3: return Math.round(size/(Math.pow(1024, y)) * 100)/100. + "Gb";
+            case 4: return Math.round(size/(Math.pow(1024, y)) * 100)/100. + "Tb";
         }
 
 

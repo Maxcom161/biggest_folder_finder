@@ -15,7 +15,9 @@ public class ValueSumCalculator extends RecursiveTask<Long> {
     protected Long compute() {
         File folder = node.getFolder();
         if (folder.isFile()) {
-            return folder.length();
+            long length = folder.length();
+            node.setSize(length); // присваиваем ноде размер
+            return length;
         }
         long sum = 0;
         List<ValueSumCalculator> subTasks = new LinkedList<>();
