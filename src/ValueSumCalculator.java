@@ -23,7 +23,7 @@ public class ValueSumCalculator extends RecursiveTask<Long> {
         List<ValueSumCalculator> subTasks = new LinkedList<>();
         File[] files = folder.listFiles();
         for(File file : files) {
-            Node child = new Node(file);
+            Node child = new Node(file, node.getLimit());
             ValueSumCalculator task = new ValueSumCalculator(child);
             task.fork(); // запустим асинхронно
             subTasks.add(task);

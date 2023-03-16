@@ -1,0 +1,14 @@
+public class ParametersBag {
+
+    public ParametersBag(String args[]){
+        throw new IllegalArgumentException("Путь к папке не указан");
+    }
+
+    public long getLimit(){
+        return 0;
+    }
+
+    public String getPath(){
+        return "";
+    }
+}

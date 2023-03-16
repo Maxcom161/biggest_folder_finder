@@ -4,9 +4,21 @@ import java.util.concurrent.ForkJoinPool;
 public class Main
 {
     public static void main(String[] args) {
-        String folderPath = "C:/Users/Admin/Desktop/DCIM";
+
+        for(int i = 0; i < args.length; i++){
+            System.out.println(i + " => " + args[i]);
+        }
+
+        ParametersBag bag = new ParametersBag(args);
+//        String folderPath = bag.getPath();
+//        long sizeLimit = bag.getLimit();
+
+        System.exit(0);
+
+        String folderPath = "C:/Users/Admin/Desktop/ГЕБ";
+        long sizeLimit = 1 * 1024 * 1024;
         File file = new File(folderPath);
-        Node root = new Node(file);
+        Node root = new Node(file, sizeLimit);
 
         long start = System.currentTimeMillis();
         ValueSumCalculator calculator =
