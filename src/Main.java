@@ -1,19 +1,14 @@
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.ForkJoinPool;
+
 
 public class Main
 {
     public static void main(String[] args) {
 
-        for(int i = 0; i < args.length; i++){
-            System.out.println(i + " => " + args[i]);
-        }
-
-        ParametersBag bag = new ParametersBag(args);
-//        String folderPath = bag.getPath();
-//        long sizeLimit = bag.getLimit();
-
-        System.exit(0);
 
         String folderPath = "C:/Users/Admin/Desktop/ГЕБ";
         long sizeLimit = 1 * 1024 * 1024;
@@ -54,8 +49,25 @@ public class Main
 
 //        System.out.println(SizeCalculator.getHumanReadableSize(root.getSize()));
 //        System.out.println(SizeCalculator.getSizeFromHumanReadable("4Mb"));
+
+
+        StringBuilder builder = new StringBuilder();
+        try {
+            List<String> text = Files.readAllLines(Paths.get("data/JavaText.txt"));
+
+            for(String string : text) {
+                builder.append(string + "\n");
+                System.out.println(string);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(builder);
+
     }
 
 
 
 }
+
+
